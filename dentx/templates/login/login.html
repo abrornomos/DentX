@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход в систему</title>
+</head>
+<body>
+	{% if error_message %}
+		{{ error_message }}
+	{% endif %}
+    <form method="POST">
+		{% csrf_token %}
+		{% for field in loginform %}
+			{{ field }}
+		{% endfor %}
+		<button type="submit">Войти в систему</button>
+	</form>
+</body>
+</html>
