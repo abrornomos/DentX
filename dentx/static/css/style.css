@@ -543,6 +543,10 @@
   letter-spacing: 0px;
 }
 
+table {
+  text-align: center;
+}
+
 .my_table {
   letter-spacing: 0px;
   overflow-y: scroll;
@@ -769,7 +773,6 @@ td {
 }
 
 td:hover {
-  padding: 0 70px;
   opacity: 1;
   background: rgb(228, 228, 228);
   cursor: pointer;
