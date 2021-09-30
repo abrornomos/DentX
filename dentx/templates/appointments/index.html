@@ -6,5 +6,164 @@
 {% endblock %}
 
 {% block content %}
-    {% trans "Yozuvlar" %}
+    <section>
+        <div class="container-fluid">
+            <div class="controls d-flex align-items-center justify-content-between">
+                <div class="angles">
+                    <a href="#"><i class="fal fa-angle-left"></i></a>
+                    <a href="#"><i class="fal fa-angle-right"></i></a>
+                </div>
+                <div class="daily-about">
+                    <p>18-sentyabr Shanba 13:13</p>
+                </div>
+                <a href="#">
+                    <i class="fal fa-expand" id="full-screen"></i>
+                    <i class="fal fa-compress display_none" id="full-screen2"></i>
+                </a>
+            </div>
+            <div class="modal-form display_none">
+                <div class="container">
+                    <div class="block-form col-12">
+                        <form action="">
+                            <div class="pats">
+                                <p class="mb-1 d-flex justify-content-between">Bemor<a href="#" class="times"><i class="fal fa-times"></i></a></p>
+                                <input type="text" class="w-100 mb-3" placeholder="F.I.O yoki Telefon" required>
+                                <div class="bottom-inputs d-flex justify-content-between flex-wrap mt-2">
+                                    <div class="left col-12 col-lg-3 d-flex flex-column align-items-start">
+                                        <p class="mb-1">Telefon</p>
+                                        <input type="text" required class=" wid">
+                                    </div> 
+                                    <div class="center col-12 col-lg-3 d-flex flex-column align-items-start">
+                                        <p class="mb-1 left">Tugilgan sana</p>
+                                        <input type="date" class=" wid" required>
+                                    </div>
+                                    <div class="end col-12 col-lg-3">
+                                        <p class="mb-1 left">Jins</p>
+                                        <input type="radio" class="m-1" name="drone">Erkak
+                                        <input type="radio" class="m-1" name="drone">Ayol
+                                    </div>
+                                    <div class="end col-12 col-lg-3 d-flex flex-column align-items-start">
+                                        <p class="mb-1 left">Manzil</p>
+                                        <input type="text" class=" wid">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="work-time">
+                                <div class="form-title">
+                                    <p><i class="fal fa-calendar-week"></i> Shanba, 18-sentyabr 14:00</p>
+                                </div>
+                                <div class="bottom-inputs d-flex justify-content-between flex-wrap mt-4">
+                                    <div class="left col-12 col-lg-3">
+                                        <p class="mb-1">Xizmat</p>
+                                        <select name="" id="">
+                                            <option value="">Xizmat tanlash</option>
+                                            <option value="">Plomba</option>
+                                            <option value="">Implant</option>
+                                            <option value="">Implant</option>
+                                            <option value="">Implant</option>
+                                        </select>
+                                    </div>
+                                    <div class="center col-12 col-lg-3 d-flex flex-column align-items-start">
+                                        <p class="mb-1 left">Boshlanish vaqti</p>
+                                        <select name="" id="" class=" wid">
+                                            <option value="">8:00</option>
+                                            <option value="">8:15</option>
+                                            <option value="">8:30</option>
+                                            <option value="">8:45</option>
+                                            <option value="">9:00</option>
+                                        </select>
+                                    </div>
+                                    <div class="end col-12 col-lg-3">
+                                        <p class="mb-1 left">Qancha vaqt</p>
+                                        <select name="" id="" class=" wid">
+                                            <option value="">15min</option>
+                                            <option value="">30min</option>
+                                            <option value="">45min</option>
+                                            <option value="">1soat</option>
+                                        </select>
+                                    </div>
+                                    <div class="end col-12 col-lg-3">
+                                        <p class="mb-1 left">Eslatma</p>
+                                        <textarea name="" id="" class="w-100"></textarea>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end col-12 col-lg-3 offset-md-9">
+                                        <button class="btn btn-primary me-md-2 mt-2" type="button">Tasdiqlamoq</button>
+                                        <button class="btn btn-secondary mt-2" type="button">Bekor qilmoq</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="overflow">
+                <table class="table time-table">
+                    <thead>
+                        <tr class="text-center">
+                        <th>Time</th>
+                        <th> 27 <br> Dushanba</th>
+                        <th> 28 <br> Seshanba</th>
+                        <th> 29 <br> Chorshanba</th>
+                        <th>30 <br> Payshanba</th>
+                        <th> 1 <br>  Juma</th>
+                        <th> 2 <br>  Shanba</th>
+                        <th> 3 <br> Yakshanba</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="align-items-center">
+                            <th scope="row">8:00</th>
+                            <td>8:00</td>
+                            <td>8:00</td>
+                            <td>8:00</td>
+                            <td>8:00</td>
+                            <td>8:00</td>
+                            <td>8:00</td>
+                            <td>8:00</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">8:15</th>
+                            <td>8:15</td>
+                            <td>8:15</td>
+                            <td>8:15</td>
+                            <td>8:15</td>
+                            <td>8:15</td>
+                            <td>8:15</td>
+                            <td>8:15</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">8:30</th>
+                            <td>8:30</td>
+                            <td>8:30</td>
+                            <td>8:30</td>
+                            <td>8:30</td>
+                            <td>8:30</td>
+                            <td>8:30</td>
+                            <td>8:30</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">8:45</th>
+                            <td>8:45</td>
+                            <td>8:45</td>
+                            <td>8:45</td>
+                            <td>8:45</td>
+                            <td>8:45</td>
+                            <td>8:45</td>
+                            <td>8:45</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">9:00</th>
+                            <td>9:00</td>
+                            <td>9:00</td>
+                            <td>9:00</td>
+                            <td>9:00</td>
+                            <td>9:00</td>
+                            <td>9:00</td>
+                            <td>9:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 {% endblock %}

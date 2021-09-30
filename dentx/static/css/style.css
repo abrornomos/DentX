@@ -606,18 +606,8 @@
 }
 
 .my_header {
-  width: 100%;
   padding: 0px;
   text-align: center;
-  -ms-flex-wrap: nowrap;
-      flex-wrap: nowrap;
-  white-space: nowrap;
-}
-
-.my_tabs {
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .my_header-logo {
@@ -670,11 +660,13 @@
 .my_panel {
   vertical-align: middle;
   color: #535151;
+  display: inline-block;
 }
 
 .my_panel a {
   text-decoration: none;
   color: inherit;
+  display: inline-block;
 }
 
 .my_panel i {
@@ -697,7 +689,7 @@
 #my_search {
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
-  min-width: 300px;
+  min-width: 50%;
 }
 
 .search_btn {
@@ -707,19 +699,39 @@
   color: #535151;
 }
 
-.panel_items {
-  vertical-align: middle;
-}
-
 .panel_item {
-  height: -webkit-min-content;
-  height: -moz-min-content;
-  height: min-content;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   margin-right: 15px;
 }
 
 .panel_item ul {
   z-index: 100;
+}
+
+.panel_item:first-child {
+  margin: 0 60px 0 15px;
+}
+
+.panel_item:last-child {
+  margin-left: 15px;
+}
+
+.inner_panel {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .my_notification {
@@ -738,12 +750,119 @@
   background-repeat: no-repeat;
 }
 
-.d-flex {
-  align-items: center;
+.time-table {
+  width: 100%;
 }
 
-.modal-footer button:first-child {
-  margin-right: 5px;
+.time-table thead tr {
+  border-bottom: 1px solid black;
+}
+
+.time-table thead tr th, .time-table tbody tr td {
+  border: 1px solid black;
+}
+
+td {
+  padding: 0 70px;
+  opacity: 0;
+  background: rgb(228, 228, 228);
+}
+
+td:hover {
+  padding: 0 70px;
+  opacity: 1;
+  background: rgb(228, 228, 228);
+  cursor: pointer;
+}
+
+tr th {
+  border: 1px solid black;
+}
+
+.controls {
+  background: rgb(207, 207, 207);
+  margin: 30px 0;
+}
+
+.angles {
+  margin-left: 20px;
+}
+
+.controls a {
+  color: black;
+  font-size: 30px;
+  margin: 0 10px;
+}
+
+.daily-about p {
+  font-size: 25px;
+  margin-bottom: 0;
+}
+
+.full {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgb(255, 255, 255);
+  margin-top: 45px;
+}
+
+.full-con {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+}
+
+.modal-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.356);
+  z-index: 1000;
+  overflow-y:scroll ;
+}
+
+.block-form {
+  background: rgb(233, 233, 233);
+  margin-top: 10%;
+  padding: 10px;
+}
+
+.pats input {
+outline-color: #15C4D7;
+}
+
+.pats, .work-time {
+  background: rgb(255, 255, 255);
+  padding: 15px 25px 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.form-title {
+  border-bottom: 1px solid rgb(92, 92, 92);
+}
+
+.wid {
+  width: 50%;
+}
+
+.times {
+  color: #535151;
+  font-size: 20px;
+  transition: 0.3s;
+}
+
+.times:hover {
+  color: #BB2D3B;
 }
 
 @media (max-width: 1340px) {
