@@ -32,7 +32,7 @@ class plan(models.Model):
     patient = models.ForeignKey(patent,on_delete=models.CASCADE)
 class photo(models.Model):
     image = models.ImageField()
-    patient = models.ForeignKey(patent, on_delete=models.CASCADE)
+    patent = models.ForeignKey(patent, on_delete=models.CASCADE)
 
 
 
