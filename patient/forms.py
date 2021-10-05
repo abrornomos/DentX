@@ -28,13 +28,13 @@ class patentForm(forms.Form):
         max_length=150,
         localize=True
     )
-    number = forms.CharField(
+    phone_number = forms.CharField(
         widget=forms.TextInput(
             label=_("Telefon nomer"),
             attrs={'class': 'form-control',
             "placeholder:_('Telefon nomeringiz')"}
         ),
-        max_length=150,
+        max_length=30,
         localize=True
     )
     birthay = forms.TimeField()
@@ -51,7 +51,8 @@ class patentForm(forms.Form):
     language = forms.CharField(
         label=_('Til')
         widget=forms.TextInput(
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-control',
+            "placeholder:_('Tilni tanlang')"}
         ),
         max_length=150,
         localize=True

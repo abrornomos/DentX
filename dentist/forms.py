@@ -29,7 +29,7 @@ class dentistForm(forms.Form):
             attrs={'class': 'form-control',
             "placeholder:_('Telefon nomeringiz')"}
         ),
-        max_length=150,
+        max_length=25,
         localize=True
     )
     adress = forms.CharField(
@@ -43,9 +43,10 @@ class dentistForm(forms.Form):
     )
     language = forms.CharField(
         widget=forms.TextInput(
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-control',
+            "placeholder:_('Tilni Tanlang')"}
         ),
-        max_length=150,
+        max_length=50ы,
         localize=True
 
     )
@@ -53,7 +54,8 @@ class dentistForm(forms.Form):
     image = forms.ImageField()
     specialty = forms.CharField(
         widget=forms.TextInput(
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-control',
+            "placeholder:_(Mutaxasisligi)"}
         ),
         max_length=150,
         localize=True
@@ -61,14 +63,14 @@ class dentistForm(forms.Form):
     )
     experience = forms.CharField(
         widget=forms.TextInput(
-            attrs={'class': 'form-control'}
+            attrs={'class': 'form-control',}
         ),
         max_length=150,
         localize=True
 
     )
-    begin = forms.DateTimeField()
-    work = forms.DateTimeField()
+    work_begin = forms.DateTimeField()
+    work_end = forms.DateTimeField()
     clinic = forms.CharField(
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
