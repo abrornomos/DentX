@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from .models import *
 
-# Create your views here.
+
+def dentist(request):
+    return render(request,'dentist/dashboard.html')
+

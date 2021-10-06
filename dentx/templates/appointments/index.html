@@ -24,27 +24,28 @@
             <div class="modal-form display_none">
                 <div class="container">
                     <div class="block-form col-12">
-                        <form action="">
+                        <form action="" method="GET">
+                            {% csrf_token %}
                             <div class="pats">
-                                <p class="mb-1 d-flex justify-content-between">Bemor<a href="#" class="times"><i class="fal fa-times"></i></a></p>
-                                <input type="text" class="w-100 mb-3" placeholder="F.I.O yoki Telefon" required>
+                                <p class="mb-1 d-flex justify-content-between"><label for="bemor">Bemor</label><a href="#" class="times"><i class="fal fa-times"></i></a></p>
+                                <input id="bemor" type="text" class="w-100 mb-3" placeholder="F.I.O yoki Telefon" required>
                                 <div class="bottom-inputs d-flex justify-content-between flex-wrap mt-2">
                                     <div class="left col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <p class="mb-1">Telefon</p>
-                                        <input type="text" required class=" wid">
+                                        <p class="mb-1"><label for='number'>Telefon</label></p>
+                                        <input id='number' type="text" required class=" wid" name="number">
                                     </div> 
                                     <div class="center col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <p class="mb-1 left">Tugilgan sana</p>
-                                        <input type="date" class=" wid" required>
+                                        <p class="mb-1 left"><label for="date">Tugilgan sana</label></p>
+                                        <input id="date" type="date" class=" wid" required>
                                     </div>
                                     <div class="end col-12 col-lg-3">
-                                        <p class="mb-1 left">Jins</p>
-                                        <input type="radio" class="m-1" name="drone">Erkak
-                                        <input type="radio" class="m-1" name="drone">Ayol
+                                        <p class="mb-1 left"><label for="Jins">Jins</label></p>
+                                        <input id="Jins" type="radio" class="m-1" name="drone">Erkak
+                                        <input id="Jins" type="radio" class="m-1" name="drone">Ayol
                                     </div>
                                     <div class="end col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <p class="mb-1 left">Manzil</p>
-                                        <input type="text" class=" wid">
+                                        <p class="mb-1 left"><label for="Manzil">Manzil</label></p>
+                                        <input id="Manzil" type="text"  class=" wid" name='adress'>
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +56,7 @@
                                 <div class="bottom-inputs d-flex justify-content-between flex-wrap mt-4">
                                     <div class="left col-12 col-lg-3">
                                         <p class="mb-1">Xizmat</p>
-                                        <select name="" id="">
+                                        <select name="" id="service">
                                             <option value="">Xizmat tanlash</option>
                                             <option value="">Plomba</option>
                                             <option value="">Implant</option>
@@ -65,7 +66,7 @@
                                     </div>
                                     <div class="center col-12 col-lg-3 d-flex flex-column align-items-start">
                                         <p class="mb-1 left">Boshlanish vaqti</p>
-                                        <select name="" id="" class=" wid">
+                                        <select name="" id="begin" class=" wid">
                                             <option value="">8:00</option>
                                             <option value="">8:15</option>
                                             <option value="">8:30</option>
@@ -75,7 +76,7 @@
                                     </div>
                                     <div class="end col-12 col-lg-3">
                                         <p class="mb-1 left">Qancha vaqt</p>
-                                        <select name="" id="" class=" wid">
+                                        <select name="" id="end" class=" wid">
                                             <option value="">15min</option>
                                             <option value="">30min</option>
                                             <option value="">45min</option>
@@ -84,10 +85,11 @@
                                     </div>
                                     <div class="end col-12 col-lg-3">
                                         <p class="mb-1 left">Eslatma</p>
-                                        <textarea name="" id="" class="w-100"></textarea>
+                                        <textarea name="" id="commit" class="w-100"></textarea>
                                     </div>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end col-12 col-lg-3 offset-md-9">
-                                        <button class="btn btn-primary me-md-2 mt-2" type="button">Tasdiqlamoq</button>
+                                        <a href="name"> <button class="btn btn-primary me-md-2 mt-2" type="button" value="name">Tasdiqlamoq</button></a>
+                                       
                                         <button class="btn btn-secondary mt-2" type="button">Bekor qilmoq</button>
                                     </div>
                                 </div>

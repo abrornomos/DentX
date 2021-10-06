@@ -1,11 +1,13 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 from .var import CHOICES
+from django.forms import DateTimeField
+
 
 
 class AppointmentForm(forms.Form):
     name = forms.CharField(
-        label=_("Bemor"),
+        label=_("bemor"),
         widget=forms.TextInput(
             attrs={
                 'class': "w-100 mb-3",
@@ -16,48 +18,26 @@ class AppointmentForm(forms.Form):
         localize=True
     )
     phone_number = forms.CharField(
-        label=_("Telefon nomer"),
+        label=_("number"),
         widget=forms.TextInput(
             attrs={
-                'class': "w-100 mb-3",
                 'placeholder': _("Telefon nomer")
+
 
             }
         ),
         max_length=30,
         localize=True
     )
-    birth_year = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'id': "year_holder",
-                'value': datetime.today().year
-            }
-        ),
-        localize=True
-    )
-    birth_month = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'id': "month_holder",
-                'value': MONTHS[datetime.today().month - 1]
-            }
-        ),
-        localize=True
-    )
     birth_day = forms.CharField(
-        widget=forms.TextInput(
-            attrs={
-                'id': "day_holder",
-                'value': datetime.today().day
-            }
-        ),
-        localize=True
+        label=_('date'),
+        widget=forms.DateTimeField()
     )
-    rod = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+    rod = forms.CharField(label=('Jins'),widget=forms.ChoiceField(widget=forms.RadioSelect(), choices=CHOICES))
     adress = forms.CharField(
+        label=('Manzil'),
         widget = forms.TextInput(
-            attrs={ 'class': "w-100 mb-3",
+            attrs={ 'class': "wid",
                 'placeholder': _("Manzilni kiriting")
 
             }
@@ -67,27 +47,27 @@ class AppointmentForm(forms.Form):
     )
     service=forms.CharField(
         widget=forms.TextInput(
-             'class': "w-100 mb-3",
+             attrs={"id":'service'}
         ),
         max_length =100,
         localize=True
     )
     begin = forms.CharField(
         widget=forms.DateInput(attrs={
-                'class': 'form-control'
+               " id": 'begin'
 
             })
     )
     end = forms.CharField(
         widget=forms.DateInput(attrs={
-                'class': 'form-control'
+                'class': 'end'
 
             }
 
         )
     )
     message = forms.CharField(widget=forms.Textarea(attrs={
-                'class': 'form-control'
+                'id': 'commit'
 
             }))
 

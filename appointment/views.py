@@ -1,5 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,HttpResponse
+from .forms import *
 
 # Create your views here.
 def appointments(request):
-    return render(request, "appointments/index.html")
+    form = AppointmentForm(request.GET)
+    print(form.data)
+    return render(request, "appointments/index.html",{'app':form})
+
+def register(request,name):
+    return HttpResponse('salom brat')
