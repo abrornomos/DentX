@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
 from django.utils.translation import ugettext_lazy as _
 from .forms import *
 
@@ -13,16 +13,17 @@ def signin(request):
         if loginform.is_valid():
             user = authenticate(
                 request,
-                username=request.POST['username'],
-                password=request.POST['password']
+                username=loginform.cleaned_data['username'],
+                password=loginform.cleaned_data['password']
             )
             if user is not None:
                 login(request, user)
-                return redirect("login:dashboard")
+                request.session[user.get_username()] = user.get_username()
+                return redirect("appointment:appointments")
             else:
                 return render(request, "login/login.html", {
                     'loginform': loginform,
-                    'error_message': _("Неверный логин и пароль")
+                    'error_message': _("Noto'g'ri login yoki parol")
                 })
         else:
             loginform = LoginForm()
@@ -38,11 +39,9 @@ def signin(request):
         })
 
 
-def signup(request):
-    return render(request, "login/signup.html")
-
-
 def signout(request):
+    if request.user.username in request.session:
+        del request.session[request.user.username]
     logout(request)
     return redirect("login:signin")
 

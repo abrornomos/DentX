@@ -1,18 +1,38 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+
+
 class Language(models.Model):
-    name=models.CharField(("Til nomi"),max_length=30)
+
+    name = models.CharField(_("Til nomi"), max_length=25)
+
+    class Meta:
+        verbose_name = _("Til")
+        verbose_name_plural = _("Tillar")
+
     def __str__(self):
         return self.name
-class Gender(models.Model):
-    name_g=models.CharField(("Jinsi"),max_length=30)
 
-    def __str__(self):
-        return self.name_g
+
 class Region(models.Model):
-    reg_name=models.CharField(('Hudud nomi'),max_length=30)
+
+    name = models.CharField(_('Hudud nomi'), max_length=50)
+
+    class Meta:
+        verbose_name = _("Hudud nomi")
+        verbose_name_plural = _("Hudud nomlari")
 
     def __str__(self):
-        return self.reg_name
+        return self.name
 
 
+class Gender(models.Model):
+
+    name = models.CharField(("Jins"), max_length=20)
+
+    class Meta:
+        verbose_name = _("Jins")
+        verbose_name_plural = _("Jinslar")
+
+    def __str__(self):
+        return self.name
