@@ -794,6 +794,7 @@ tr th {
   color: black;
   font-size: 30px;
   margin: 0 10px;
+  cursor: pointer;
 }
 
 .daily-about p {

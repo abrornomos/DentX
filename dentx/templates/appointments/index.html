@@ -10,8 +10,8 @@
         <div class="container-fluid">
             <div class="controls d-flex align-items-center justify-content-between">
                 <div class="angles">
-                    <a href="#"><i class="fal fa-angle-left"></i></a>
-                    <a href="#"><i class="fal fa-angle-right"></i></a>
+                    <a><i class="fal fa-angle-left"></i></a>
+                    <a><i class="fal fa-angle-right"></i></a>
                 </div>
                 <div class="daily-about">
                     <p>18-sentyabr Shanba 13:13</p>
@@ -21,6 +21,7 @@
                     <i class="fal fa-compress display_none" id="full-screen2"></i>
                 </a>
             </div>
+            <div class="ajax"></div>
             <div class="modal-form display_none">
                 <div class="container">
                     <div class="block-form col-12">
@@ -168,4 +169,47 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        $.ajax({
+            url: "{% url 'appointment:table' %}",
+            success: function(result) {
+                $(".ajax")[0].innerHTML = result
+            }
+        })
+        $(".fa-angle-left").on("click", function() {
+            $.ajax({
+                url : "{% url 'appointment:table' %}",
+                type: "POST",
+                data : {
+                    csrfmiddlewaretoken: $('{% csrf_token %}').val(),
+                    day: $(".ajax")[0].innerText.split("-")[2],
+                    month: $(".ajax")[0].innerText.split("-")[1],
+                    year: $(".ajax")[0].innerText.split("-")[0],
+                    direction: "left"
+                },
+                dataType : "json",
+            }).always(function(result) {
+                $(".ajax")[0].innerHTML = result.responseText
+            })
+        })
+        $(".fa-angle-right").on("click", function() {
+            $.ajax({
+                url : "{% url 'appointment:table' %}",
+                type: "POST",
+                data : {
+                    csrfmiddlewaretoken: $('{% csrf_token %}').val(),
+                    day: $(".ajax")[0].innerText.split("-")[2],
+                    month: $(".ajax")[0].innerText.split("-")[1],
+                    year: $(".ajax")[0].innerText.split("-")[0],
+                    direction: "right"
+                },
+                dataType : "json",
+            }).always(function(result) {
+                $(".ajax")[0].innerHTML = result.responseText
+            })
+        })
+    </script>
 {% endblock %}
