@@ -20,17 +20,18 @@ class Clinic(models.Model):
 
 
 class User(models.Model):
-    user = models.OneToOneField("auth.User", verbose_name=_("Tish shifokori"), on_delete=models.CASCADE, related_name="dentist_user")
+    user = models.ForeignKey("auth.User", verbose_name=_("Tish shifokori"), on_delete=models.CASCADE, related_name="dentist_user")
     phone_number = models.CharField(_("Telefon raqami"), max_length=100)
     gender = models.ForeignKey("baseapp.Gender", verbose_name=_("Jins"), on_delete=models.CASCADE, related_name="dentist_gender")
     birthday = models.DateField(_("Tug'ilgan sanasi"), auto_now=False, auto_now_add=False)
     image = models.ImageField(_("Rasmi"), upload_to="dentists/photos/")
     language = models.ForeignKey("baseapp.Language", verbose_name=_("Tili"), on_delete=models.CASCADE, related_name="dentist_gender")
-    specialty = models.CharField(_("Soha"), max_length=500)
+    speciality = models.CharField(_("Soha"), max_length=500)
     experience = models.IntegerField(_("Tajriba"))
     worktime_begin = models.TimeField(_("Ish vaqti boshlanishi"), auto_now=False, auto_now_add=False)
     worktime_end = models.TimeField(_("Ish vaqti tugashi"), auto_now=False, auto_now_add=False)
     is_fullday = models.BooleanField(_("24 soat rejimi"))
+    slug = models.CharField(_("Slug"), max_length=255, default="1")
     clinic = models.ForeignKey("dentist.Clinic", verbose_name=_("Shifoxona"), on_delete=models.CASCADE, related_name="dentist_clinic")
 
     class Meta:
@@ -38,7 +39,35 @@ class User(models.Model):
         verbose_name_plural = _("Tish shifokorlari")
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name}"
+        return f"{self.user.last_name} {self.user.first_name}"
+
+
+class Service(models.Model):
+
+    name = models.CharField(_("FISh"), max_length=100)
+    duration = models.TimeField(_("Xizmat davomiyligi"), auto_now=False, auto_now_add=False)
+    price = models.IntegerField(_("Xizmat narxi"))
+    dentist = models.ForeignKey("dentist.User", verbose_name=_("Tish shifokori"), on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _("Xizmat")
+        verbose_name_plural = _("Xizmatlar")
+
+    def __str__(self):
+        return self.name
+
+
+class Cabinet_Image(models.Model):
+
+    image = models.ImageField(_("Rasm"), upload_to="dentists/cabinet_photos/")
+    dentist = models.ForeignKey("dentist.User", verbose_name=_("Tish shifokori"), on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _("Kabinet rasmi")
+        verbose_name_plural = _("Kabinet rasmlari")
+
+    def __str__(self):
+        return self.image
 
 
 # class service(models.Model):

@@ -21,7 +21,7 @@
                     <i class="fal fa-compress display_none" id="full-screen2"></i>
                 </a>
             </div>
-            <div class="ajax"></div>
+            {% comment %} <div class="ajax"></div> {% endcomment %}
             <div class="modal-form display_none">
                 <div class="container">
                     <div class="block-form col-12">
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="overflow">
-                <table class="table time-table table-striped">
+                {% comment %} <table class="table time-table table-striped">
                     <thead>
                         <tr>
                             <th>Time</th>
@@ -165,7 +165,7 @@
                             <td>9:00</td>
                         </tr>
                     </tbody>
-                </table>
+                </table> {% endcomment %}
             </div>
         </div>
     </section>
@@ -173,10 +173,45 @@
 
 {% block javascript %}
     <script type="text/javascript">
+        {% get_current_language as LANGUAGE_CODE %}
+        {% if LANGUAGE_CODE == 'uz' %}days = [
+            "Dushanba",
+            "Seshanba",
+            "Chorshanba",
+            "Payshanba",
+            "Juma",
+            "Shanba",
+            "Yakshanba"
+        ]
+        {% elif LANGUAGE_CODE == 'ru' %}days = [
+            "Понедельник",
+            "Вторник",
+            "Среда",
+            "Четверг",
+            "Пятница",
+            "Суббота",
+            "Воскресенье"
+        ]
+        {% endif %}
+        today = new Date()
+        today.setTime(today.getTime() - ((today.getDay() + 6) % 7) * 24 * 60 * 60 * 1000)
         $.ajax({
             url: "{% url 'appointment:table' %}",
             success: function(result) {
-                $(".ajax")[0].innerHTML = result
+                $(".overflow").html(result)
+                $("head").append(
+                    $("<link rel='stylesheet'>").attr("href", "{% static 'css/table.css' %}")
+                )
+                $(".overflow td").on("dblclick", function() {
+                    if ($(".modal-form").hasClass("display_none")) {
+                        $(".modal-form").addClass("display_absolute").removeClass("display_none")
+                        temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
+                        text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
+                        $(".form-title p").text(text)
+                    } else {
+                        $(".modal-form").removeClass("display_absolute").addClass("display_none")
+                    }
+                })
             }
         })
         $(".fa-angle-left").on("click", function() {
@@ -185,15 +220,26 @@
                 type: "POST",
                 data : {
                     csrfmiddlewaretoken: $('{% csrf_token %}').val(),
-                    day: $(".ajax")[0].innerText.split("-")[2],
-                    month: $(".ajax")[0].innerText.split("-")[1],
-                    year: $(".ajax")[0].innerText.split("-")[0],
+                    day: today.getDate(),
+                    month: today.getMonth() + 1,
+                    year: today.getFullYear(),
                     direction: "left"
                 },
                 dataType : "json",
             }).always(function(result) {
-                $(".ajax")[0].innerHTML = result.responseText
+                $(".overflow").html(result.responseText)
+                $(".overflow td").on("dblclick", function() {
+                    if ($(".modal-form").hasClass("display_none")) {
+                        $(".modal-form").addClass("display_absolute").removeClass("display_none")
+                        temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
+                        text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
+                        $(".form-title p").text(text)
+                    } else {
+                        $(".modal-form").removeClass("display_absolute").addClass("display_none")
+                    }
+                })
             })
+            today.setTime(today.getTime() - 7 * 24 * 60 * 60 * 1000)
         })
         $(".fa-angle-right").on("click", function() {
             $.ajax({
@@ -201,15 +247,26 @@
                 type: "POST",
                 data : {
                     csrfmiddlewaretoken: $('{% csrf_token %}').val(),
-                    day: $(".ajax")[0].innerText.split("-")[2],
-                    month: $(".ajax")[0].innerText.split("-")[1],
-                    year: $(".ajax")[0].innerText.split("-")[0],
+                    day: today.getDate(),
+                    month: today.getMonth() + 1,
+                    year: today.getFullYear(),
                     direction: "right"
                 },
                 dataType : "json",
             }).always(function(result) {
-                $(".ajax")[0].innerHTML = result.responseText
+                $(".overflow").html(result.responseText)
+                $(".overflow td").on("dblclick", function() {
+                    if ($(".modal-form").hasClass("display_none")) {
+                        $(".modal-form").addClass("display_absolute").removeClass("display_none")
+                        temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
+                        text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
+                        $(".form-title p").text(text)
+                    } else {
+                        $(".modal-form").removeClass("display_absolute").addClass("display_none")
+                    }
+                })
             })
+            today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000)
         })
     </script>
 {% endblock %}

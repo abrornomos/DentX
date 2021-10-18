@@ -1,0 +1,27 @@
+.overflow table {
+  text-align: center;
+}
+
+.overflow .time-table {
+  width: 100%;
+}
+
+.overflow .time-table thead tr {
+  border-bottom: 1px solid black;
+}
+
+.overflow .time-table thead tr th, .overflow .time-table tbody tr td {
+  border: 1px solid black;
+}
+
+.overflow td {
+  padding: 0 70px;
+  opacity: 0;
+  background: rgb(228, 228, 228);
+}
+
+.overflow td:hover {
+  opacity: 1;
+  background: rgb(228, 228, 228);
+  cursor: pointer;
+}

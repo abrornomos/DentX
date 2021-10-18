@@ -2,8 +2,11 @@ from django.conf import settings as global_settings
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, HttpResponse
 from dentist.models import User as DentistUser
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 from .forms import *
+from .handler import *
+from .models import *
+from .var import *
 
 # Create your views here.
 
@@ -37,9 +40,42 @@ def table(request):
                 int(request.POST['day'])
             )
             day = temp + timedelta(days=temp.weekday(), weeks=1)
-        html = f"<h1>{day}</h1>"
-        return HttpResponse(html)
     else:
         temp = date.today()
-        html = f"<h1>{temp - timedelta(days=temp.weekday())}</h1>"
-        return HttpResponse(html)
+        day = temp - timedelta(days=temp.weekday())
+    days = [day]
+    html = f"<table class=\"time-table table-bordered text-center\"><thead><tr class=\"text-center\"><th>Time</th><th>{day.day}-{MONTHS[day.month - 1].lower()}<br>{DAYS[day.weekday()]}</th>"
+    for i in range(6):
+        temp = days[len(days) - 1] + timedelta(days=1)
+        days.append(temp)
+        html += f"<th>{temp.day}-{MONTHS[temp.month - 1].lower()}<br>{DAYS[temp.weekday()]}</th>"
+    html += "</tr></thead><tbody>"
+    user = User.objects.get(username=request.user.username)
+    dentist = DentistUser.objects.get(user=user)
+    day_begin = datetime(
+        days[0].year,
+        days[0].month,
+        days[0].day,
+        dentist.worktime_begin.hour,
+        dentist.worktime_begin.minute
+    )
+    day_end = datetime(
+        days[0].year,
+        days[0].month,
+        days[0].day,
+        dentist.worktime_end.hour,
+        dentist.worktime_end.minute
+    )
+    while day_begin <= day_end:
+        html += f"<tr><th>{day_begin.strftime('%H:%M')}</th>"
+        for day in days:
+            if compare_time(day_begin, Appointment.objects.filter(
+                begin__year=day_begin.year,
+                begin__month=day_begin.month,
+                begin__day=day_begin.day
+            )):
+                html += f"<td>{day_begin.strftime('%H:%M')}</td>"
+        day_begin += timedelta(minutes=15)
+        html += "</tr>"
+    html += "</tbody></table>"
+    return HttpResponse(html)
