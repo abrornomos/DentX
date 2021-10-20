@@ -13,16 +13,16 @@
     <body>
         <div class="container-fluid">
             <div class="my_header">
-                <a href="#" class="my_header-logo">DentX</a>
-                <a href="#"class="my_header-item active-item">
+                <a href="{% url 'appointment:appointments' %}" class="my_header-logo">DentX</a>
+                <a href="{% url 'appointment:appointments' %}" class="my_header-item{% if "/appointments/" in request.path %} active-item{% endif %}">
                     <i class="far fa-calendar-alt"></i>
                     <span>Записи</span>
                 </a>
-                <a href="doska.html" class="my_header-item">
+                <a href="{% url 'baseapp:board' %}" class="my_header-item{% if "/board/" in request.path %} active-item{% endif %}">
                     <i class="fas fa-th-list"></i>
                     <span>Доска</span>
                 </a>
-                <a href="patsient.html" class="my_header-item">
+                <a href="#" class="my_header-item{% if "/patients/" in request.path %} active-item{% endif %}">
                     <i class="fas fa-user"></i>
                     <span>Пациенты</span>
                 </a>
