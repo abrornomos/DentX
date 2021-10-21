@@ -1,6 +1,7 @@
 from django.conf import settings as global_settings
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, HttpResponse
+from django.utils.translation import get_language
 from dentist.models import User as DentistUser
 from datetime import datetime, date, timedelta
 from .forms import *
@@ -14,15 +15,16 @@ from .var import *
 def appointments(request):
     if request.user.username not in request.session:
         return redirect(f"{global_settings.LOGIN_URL}?next={request.path}")
+    if request.method == "POST":
+        pass
     user = User.objects.get(username=request.user.username)
-    dentist = DentistUser.objects.get(user=user)
-    form = AppointmentForm(request.GET)
+    dentist = DentistUser.objects.filter(user=user, language__name="ru")[0]
+    appointmentform = AppointmentForm()
     today = date.today()
     monday = today - timedelta(days=today.weekday())
     return render(request, "appointments/index.html", {
-        'app': form,
+        'appointmentform': appointmentform,
         'dentist': dentist,
-        'monday': monday
     })
 
 def table(request):
@@ -51,7 +53,7 @@ def table(request):
         html += f"<th>{temp.day}-{MONTHS[temp.month - 1].lower()}<br>{DAYS[temp.weekday()]}</th>"
     html += "</tr></thead><tbody>"
     user = User.objects.get(username=request.user.username)
-    dentist = DentistUser.objects.get(user=user)
+    dentist = DentistUser.objects.filter(user=user, language__name="ru")[0]
     day_begin = datetime(
         days[0].year,
         days[0].month,

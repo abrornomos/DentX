@@ -24,28 +24,36 @@
             <div class="modal-form display_none">
                 <div class="container">
                     <div class="block-form col-12">
-                        <form action="" method="GET">
+                        <form method="POST">
                             {% csrf_token %}
                             <div class="pats">
-                                <p class="mb-1 d-flex justify-content-between"><label for="bemor">Bemor</label><a href="#" class="times"><i class="fal fa-times"></i></a></p>
-                                <input id="bemor" type="text" class="w-100 mb-3" placeholder="F.I.O yoki Telefon" required>
+                                <div class="mb-1 d-flex justify-content-between">
+                                    <label for="id_name">{{ appointmentform.name.label }}</label>
+                                    <span class="times">
+                                        <i class="fal fa-times"></i>
+                                    </span>
+                                </div>
+                                {{ appointmentform.name }}
                                 <div class="bottom-inputs d-flex justify-content-between flex-wrap mt-2">
                                     <div class="left col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <p class="mb-1"><label for='number'>Telefon</label></p>
-                                        <input id='number' type="text" required class=" wid" name="number">
+                                        <label class="mb-1 left" for="id_phone_number">{{ appointmentform.phone_number.label }}</label>
+                                        {{ appointmentform.phone_number }}
                                     </div> 
                                     <div class="center col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <p class="mb-1 left"><label for="date">Tugilgan sana</label></p>
-                                        <input id="date" type="date" class=" wid" required>
+                                        <label class="mb-1 left" for="id_birthday">{{ appointmentform.birthday.label }}</label>
+                                        {{ appointmentform.birthday }}
                                     </div>
                                     <div class="end col-12 col-lg-3">
-                                        <p class="mb-1 left"><label for="Jins">Jins</label></p>
-                                        <input id="Jins" type="radio" class="m-1" name="drone">Erkak
-                                        <input id="Jins" type="radio" class="m-1" name="drone">Ayol
+                                        <label class="mb-1 left" for="id_gender">{{ appointmentform.gender.label }}</label>
+                                        <div>
+                                        {% for el in appointmentform.gender %}
+                                            {{ el }}
+                                        {% endfor %}
+                                        </div>
                                     </div>
                                     <div class="end col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <p class="mb-1 left"><label for="Manzil">Manzil</label></p>
-                                        <input id="Manzil" type="text"  class=" wid" name='adress'>
+                                        <label class="mb-1 left" for="id_address">{{ appointmentform.address.label }}</label>
+                                        {{ appointmentform.address }}
                                     </div>
                                 </div>
                             </div>

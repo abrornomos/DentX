@@ -859,7 +859,7 @@ outline-color: #15C4D7;
 }
 
 .wid {
-  width: 50%;
+  width: 80%;
 }
 
 .times {
@@ -868,7 +868,12 @@ outline-color: #15C4D7;
   transition: 0.3s;
 }
 
+.avatar img {
+  width: 60px;
+}
+
 .times:hover {
+  cursor: pointer;
   color: #BB2D3B;
 }
 
