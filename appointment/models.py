@@ -24,7 +24,7 @@ class Appointment(models.Model):
     service = models.ForeignKey("dentist.Service", verbose_name=_("Xizmat"), on_delete=models.CASCADE, related_name="appointment_service")
     begin = models.DateTimeField(_("Boshlanish vaqti"), default=None, auto_now=False, auto_now_add=False)
     end = models.DateTimeField(_("Tugash vaqti"), default=None, auto_now=False, auto_now_add=False)
-    comment = models.TextField(_("Izohlar"))
+    comment = models.TextField(_("Izohlar"), blank=False, null=True)
     status = models.CharField(_("Qabul holati"), max_length=50)
 
     class Meta:
@@ -32,4 +32,4 @@ class Appointment(models.Model):
         verbose_name_plural = _("Qabullar")
 
     def __str__(self):
-        return f"{self.dentist.__str__()} - {self.time}"
+        return f"{self.patient.__str__()} - {self.dentist.__str__()}"

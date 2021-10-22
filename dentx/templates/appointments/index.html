@@ -66,9 +66,10 @@
                                         <label class="mb-1 left" for="id_service">{{ appointmentform.service.label }}</label>
                                         {{ appointmentform.service }}
                                     </div>
+                                    {{ appointmentform.begin_day }}
                                     <div class="center col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <label class="mb-1 left" for="id_begin">{{ appointmentform.begin.label }}</label>
-                                        {{ appointmentform.begin }}
+                                        <label class="mb-1 left" for="id_begin_time">{{ appointmentform.begin_time.label }}</label>
+                                        {{ appointmentform.begin_time }}
                                     </div>
                                     <div class="end col-12 col-lg-3">
                                         <label class="mb-1 left" for="id_duration">{{ appointmentform.duration.label }}</label>
@@ -128,6 +129,7 @@
                     if ($(".modal-form").hasClass("display_none")) {
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
+                        $("#id_begin_day").val(temp[0])
                         text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
                         $(".form-title p").text(text)
                     } else {
@@ -154,6 +156,7 @@
                     if ($(".modal-form").hasClass("display_none")) {
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
+                        $("#id_begin_day").val(temp[0])
                         text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
                         $(".form-title p").text(text)
                     } else {
@@ -181,6 +184,7 @@
                     if ($(".modal-form").hasClass("display_none")) {
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
+                        $("#id_begin_day").val(temp[0])
                         text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
                         $(".form-title p").text(text)
                     } else {
@@ -219,6 +223,10 @@
         })
         $("#id_service"){% for service in services %}.append(
             $("<option></option>").html("{{ service.service_name.name }}")
+        )
+        {% endfor %}
+        $("#id_begin_time"){% for time in times %}.append(
+            $("<option></option>").html("{{ time }}")
         )
         {% endfor %}
     </script>

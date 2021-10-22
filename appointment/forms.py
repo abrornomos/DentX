@@ -24,7 +24,7 @@ class AppointmentForm(forms.Form):
         ),
         localize=True
     )
-    birthday = forms.DateField(
+    birthday = forms.CharField(
         label=_("Tugilgan sana"),
         widget=forms.DateInput(
             attrs={
@@ -62,7 +62,10 @@ class AppointmentForm(forms.Form):
         ),
         localize=True
     )
-    begin = forms.DateTimeField(
+    begin_day = forms.CharField(
+        widget=forms.HiddenInput()
+    )
+    begin_time = forms.CharField(
         label=_("Boshlanish vaqti"),
         widget=forms.Select(
             attrs={

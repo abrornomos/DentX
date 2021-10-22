@@ -15,7 +15,6 @@ def board(request):
     user = User.objects.get(username=request.user.username)
     dentist = DentistUser.objects.get(user=user)
     queries = get_queries(Query.objects.filter(dentist=dentist))
-    print(queries)
     return render(request, "baseapp/board.html", {
         'dentist': dentist,
         'queries': queries,
