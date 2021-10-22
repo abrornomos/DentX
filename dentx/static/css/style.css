@@ -862,7 +862,7 @@ outline-color: #15C4D7;
   width: 80%;
 }
 
-.times {
+span.times {
   color: #535151;
   font-size: 20px;
   transition: 0.3s;
@@ -872,7 +872,7 @@ outline-color: #15C4D7;
   width: 60px;
 }
 
-.times:hover {
+span.times:hover {
   cursor: pointer;
   color: #BB2D3B;
 }

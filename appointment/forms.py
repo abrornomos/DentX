@@ -47,35 +47,45 @@ class AppointmentForm(forms.Form):
         label=_("Manzil"),
         widget=forms.TextInput(
             attrs={
-                'class': "wid",
+                'class': "w-100",
                 'placeholder': _("Manzilni kiriting"),
             }
         ),
         localize=True
     )
-    service=forms.CharField(
-        widget=forms.TextInput(
-             attrs={"id":'service'}
+    service = forms.CharField(
+        label=_("Xizmat"),
+        widget=forms.Select(
+            attrs={
+                'class': "wid"
+            }
         ),
-        max_length =100,
         localize=True
     )
-    begin = forms.CharField(
-        widget=forms.DateInput(attrs={
-               " id": 'begin'
-
-            })
-    )
-    end = forms.CharField(
-        widget=forms.DateInput(attrs={
-                'class': 'end'
-
+    begin = forms.DateTimeField(
+        label=_("Boshlanish vaqti"),
+        widget=forms.Select(
+            attrs={
+                'class': "wid"
             }
-
         )
     )
-    message = forms.CharField(widget=forms.Textarea(attrs={
-                'id': 'commit'
-
-            }))
+    duration = forms.CharField(
+        label=_("Davomiyligi"),
+        widget=forms.Select(
+            attrs={
+                'class': "wid"
+            },
+            choices=CHOICES['duration']
+        )
+    )
+    comment = forms.CharField(
+        label=_("Eslatma"),
+        widget=forms.Textarea(
+            attrs={
+                'class': 'w-100'
+            }
+        ),
+        required=False
+    )
 

@@ -13,7 +13,7 @@ def board(request):
     if request.user.username not in request.session:
         return redirect(f"{global_settings.LOGIN_URL}?next={request.path}")
     user = User.objects.get(username=request.user.username)
-    dentist = DentistUser.objects.filter(user=user, language__name="ru")[0]
+    dentist = DentistUser.objects.get(user=user)
     queries = get_queries(Query.objects.filter(dentist=dentist))
     print(queries)
     return render(request, "baseapp/board.html", {

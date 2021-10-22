@@ -59,45 +59,28 @@
                             </div>
                             <div class="work-time">
                                 <div class="form-title">
-                                    <p><i class="fal fa-calendar-week"></i> Shanba, 18-sentyabr 14:00</p>
+                                    <p><i class="fal fa-calendar-week"></i></p>
                                 </div>
                                 <div class="bottom-inputs d-flex justify-content-between flex-wrap mt-4">
                                     <div class="left col-12 col-lg-3">
-                                        <p class="mb-1">Xizmat</p>
-                                        <select name="" id="service">
-                                            <option value="">Xizmat tanlash</option>
-                                            <option value="">Plomba</option>
-                                            <option value="">Implant</option>
-                                            <option value="">Implant</option>
-                                            <option value="">Implant</option>
-                                        </select>
+                                        <label class="mb-1 left" for="id_service">{{ appointmentform.service.label }}</label>
+                                        {{ appointmentform.service }}
                                     </div>
                                     <div class="center col-12 col-lg-3 d-flex flex-column align-items-start">
-                                        <p class="mb-1 left">Boshlanish vaqti</p>
-                                        <select name="" id="begin" class=" wid">
-                                            <option value="">8:00</option>
-                                            <option value="">8:15</option>
-                                            <option value="">8:30</option>
-                                            <option value="">8:45</option>
-                                            <option value="">9:00</option>
-                                        </select>
+                                        <label class="mb-1 left" for="id_begin">{{ appointmentform.begin.label }}</label>
+                                        {{ appointmentform.begin }}
                                     </div>
                                     <div class="end col-12 col-lg-3">
-                                        <p class="mb-1 left">Qancha vaqt</p>
-                                        <select name="" id="end" class=" wid">
-                                            <option value="">15min</option>
-                                            <option value="">30min</option>
-                                            <option value="">45min</option>
-                                            <option value="">1soat</option>
-                                        </select>
+                                        <label class="mb-1 left" for="id_duration">{{ appointmentform.duration.label }}</label>
+                                        {{ appointmentform.duration }}
                                     </div>
                                     <div class="end col-12 col-lg-3">
-                                        <p class="mb-1 left">Eslatma</p>
-                                        <textarea name="" id="commit" class="w-100"></textarea>
+                                        <label class="mb-1 left" for="id_comment">{{ appointmentform.comment.label }}</label>
+                                        {{ appointmentform.comment }}
                                     </div>
                                     <div class="d-grid gap-2 d-md-flex justify-content-md-end col-12 col-lg-3 offset-md-9">
-                                        <a href="name"> <button class="btn btn-primary me-md-2 mt-2" type="button" value="name">Tasdiqlamoq</button></a>
-                                        <button class="btn btn-secondary mt-2" type="button">Bekor qilmoq</button>
+                                        <button class="btn btn-primary me-md-2 mt-2" type="submit">Tasdiqlamoq</button>
+                                        <button class="btn btn-secondary mt-2 times" type="button">Bekor qilmoq</button>
                                     </div>
                                 </div>
                             </div>
@@ -207,5 +190,36 @@
             })
             today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000)
         })
+        $("#full-screen").on("click", function() {
+            if ($("#full-screen2").hasClass("display_none")) {
+                $("#full-screen2").addClass("display_absolute").removeClass("display_none")
+                $("#full-screen").addClass("display_none")
+                $(".overflow").addClass("full")
+                $(".controls").addClass("full-con")
+            } else {
+                $("#full-screen2").removeClass("display_absolute").addClass("display_none")
+            }
+        })
+        $("#full-screen2").on("click", function() {
+            if ($("#full-screen").hasClass("display_none")) {
+                $("#full-screen").addClass("display_absolute").removeClass("display_none")
+                $("#full-screen2").addClass("display_none")
+                $(".overflow").removeClass("full")
+                $(".controls").removeClass("full-con")
+            } else {
+                $("#full-screen").removeClass("display_absolute").addClass("display_none")
+            }
+        })
+        $(".times").on("click", function() {
+            if ($(".modal-form").hasClass("display_absolute")) {
+                $(".modal-form").addClass("display_none").removeClass("display_absolute")
+            } else {
+                $(".modal-form").removeClass("display_absolute").addClass("display_none")
+            }
+        })
+        $("#id_service"){% for service in services %}.append(
+            $("<option></option>").html("{{ service.service_name.name }}")
+        )
+        {% endfor %}
     </script>
 {% endblock %}
