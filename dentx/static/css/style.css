@@ -753,8 +753,44 @@ table {
   background-repeat: no-repeat;
 }
 
-.overflow{
+.overflow {
   overflow-x: scroll;
+}
+
+.overflow table {
+  text-align: center;
+}
+
+.overflow .time-table {
+  width: 100%;
+}
+
+.overflow .time-table thead tr {
+  border-bottom: 1px solid black;
+}
+
+.overflow .time-table thead tr th, .overflow .time-table tbody tr td {
+  border: 1px solid black;
+}
+
+.overflow th {
+  padding: 0 20px;
+}
+
+.overflow td.time {
+  opacity: 0;
+  background: rgb(228, 228, 228);
+}
+
+.overflow td.time:hover {
+  opacity: 1;
+  background: rgb(228, 228, 228);
+  cursor: pointer;
+}
+
+.overflow td div {
+  text-align: left;
+  padding-left: 5px;
 }
 
 .modal-form span {
@@ -776,7 +812,7 @@ table {
   margin-left: 20px;
 }
 
-.controls a {
+.controls a, .controls span {
   color: black;
   font-size: 30px;
   margin: 0 10px;
@@ -850,13 +886,30 @@ span.times {
   transition: 0.3s;
 }
 
+span.times:hover {
+  cursor: pointer;
+  color: #BB2D3B;
+}
+
 .avatar img {
   width: 60px;
 }
 
-span.times:hover {
+.input-group div.w-100 {
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+.input-group div.w-100 > div {
+  border-bottom: 1px solid black;
+  color: black;
+}
+
+.input-group div.w-100 > div:hover {
+  background-color: #bbbbbb;
   cursor: pointer;
-  color: #BB2D3B;
 }
 
 @media (max-width: 1340px) {

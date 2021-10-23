@@ -1,6 +1,7 @@
 from django.conf import settings as global_settings
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse, HttpResponse
+from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.utils.translation import get_language
 from datetime import datetime, date, timedelta, tzinfo
@@ -49,16 +50,22 @@ def appointments(request):
                     duration = int(appointmentform.cleaned_data['duration'])
                     duration = timedelta(hours=duration // 60, minutes=duration % 60)
                     end = begin + duration
-                    appointment = Appointment.objects.create(
-                        dentist=dentist,
-                        patient=patient,
-                        service=service,
-                        begin=begin,
-                        end=end,
-                        comment=appointmentform.cleaned_data['comment'],
-                        status="waiting"
-                    )
-                    print(appointment)
+                    if compare_appointment(begin, end, Appointment.objects.filter(
+                        begin__year=begin_year,
+                        begin__month=begin_month,
+                        begin__day=begin_day
+                    )):
+                        appointment = Appointment.objects.create(
+                            dentist=dentist,
+                            patient=patient,
+                            service=service,
+                            begin=begin,
+                            end=end,
+                            comment=appointmentform.cleaned_data['comment'],
+                            status="waiting"
+                        )
+                    else:
+                        print("Cannot register appointment")
                 else:
                     print(False)
             elif len(name) == 1:
@@ -94,6 +101,7 @@ def appointments(request):
         'services': services,
         'times': times
     })
+
 
 def table(request):
     if request.method == "POST":
@@ -136,11 +144,6 @@ def table(request):
         dentist.worktime_end.hour,
         dentist.worktime_end.minute
     )
-    print(Appointment.objects.filter(
-        begin__year=2021,
-        begin__month=10,
-        begin__day=21
-    ))
     while day_begin <= day_end:
         html += f"<tr><th>{day_begin.strftime('%H:%M')}</th>"
         for day in days:
@@ -161,3 +164,20 @@ def table(request):
         html += "</tr>"
     html += "</tbody></table>"
     return HttpResponse(html)
+
+
+def patients(request):
+    patients = []
+    temp = PatientUser.objects.all()
+    for patient in temp:
+        # patient_user = User.objects.get(pk=patient.user_id).first_name
+        patients.append({
+            'image': str(patient.image),
+            'name': str(patient),
+            'phone_number': patient.phone_number,
+            'birthday': str(patient.birthday),
+            'gender': patient.gender_id,
+            'address': patient.address
+        })
+    print(patients)
+    return JsonResponse(patients, safe=False)

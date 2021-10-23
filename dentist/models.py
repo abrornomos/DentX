@@ -74,7 +74,7 @@ class User_translation(models.Model):
 class Service(models.Model):
 
     name = models.CharField(_("Xizmat nomi"), max_length=100)
-    duration = models.TimeField(_("Xizmat davomiyligi"), auto_now=False, auto_now_add=False)
+    duration = models.IntegerField(_("Xizmat davomiyligi"))
     price = models.IntegerField(_("Xizmat narxi"))
     dentist = models.ForeignKey("dentist.User", verbose_name=_("Tish shifokori"), on_delete=models.CASCADE)
 

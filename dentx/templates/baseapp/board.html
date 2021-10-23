@@ -1,5 +1,5 @@
 {% extends 'app.html' %}
-{% load static i18n %}
+{% load static i18n appoint_date appoint_time %}
 
 {% block title %}
 	{% trans "Doska" %}
@@ -32,15 +32,15 @@
                                                     <div class="row align-items-center mb-4">
                                                         <div class="col-auto">
                                                             <div class="avatar avatar-xs">
-                                                                <div class="text-center border border-1 rounded-circle">
-                                                                    <img src="/media/{{ query.patient_extra.image }}">
+                                                                <div class="text-center border border-1">
+                                                                    <img src="/media/{{ query.patient.image }}">
                                                                     {% comment %} <span class="far fa-file-image"></span> {% endcomment %}
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="col p-0">
-                                                            <h6 class="ml-5">{{ query.patient.first_name }} {{ query.patient.last_name }}</h6>
-                                                            <h6 class="ml-5">{{ query.patient_extra.phone_number }}</h6>
+                                                            <h6 class="ml-5">{{ query.patient }}</h6>
+                                                            <h6 class="ml-5">{{ query.patient.phone_number }}</h6>
                                                         </div>
                                                     </div>
                                                     <div class="row align-items-start">
@@ -64,7 +64,7 @@
                                                 <div class="col">
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a href="tel:{{ query.patient_extra.phone_number }}" class="btn btn-outline-info mr-2" draggable="false">
+                                                    <a href="tel:{{ query.patient.phone_number }}" class="btn btn-outline-info mr-2" draggable="false">
                                                         <i class="fas fa-phone"></i>
                                                     </a>
                                                     <button class="btn btn-white">
@@ -88,31 +88,42 @@
                                     <h4 class="card-header-title">Записаны</h4>
                                 </div>
                             </div>
-                        </div><div class="card-body">
+                        </div>
+                        {% for appointment in appointments %}<div class="card-body">
                             <div tabindex="0" class="kanban-category">
                                 <div tabindex="0" class="kanban-item">
                                     <div class="card" draggable="false" style="border-top: 3px solid rgb(91, 192, 235); transform: translateZ(0px);">
                                         <div class="card-body p-3">
                                             <div class="row align-items-center">
                                                 <div class="col">
-                                                    <h4>19:40 - 19:55</h4>
+                                                    <h4>{% appoint_date appointment.appointment.begin %}</h4>
+                                                    <h4>{% appoint_time appointment.appointment.begin %} - {% appoint_time appointment.appointment.end %}</h4>
                                                 </div>
                                                 <div class="col-auto small">
-                                                    <span class="badge bg-warning">Не подтвержден</span>
+                                                {% if appointment.appointment.status == "waiting" %}
+                                                    <span class="badge bg-info">Ожидается</span>
+                                                {% elif appointment.appointment.status == "done" %}
+                                                    <span class="badge bg-success">Посещён</span>
+                                                {% elif appointment.appointment.status == "missed" %}
+                                                    <span class="badge bg-danger">Не посещён</span>
+                                                {% endif %}
                                                 </div>
                                             </div>
                                             <div class="row align-items-start">
                                                 <div class="col">
                                                     <div class="row align-items-center">
                                                         <div class="col-auto">
-                                                            <div  class="avatar avatar-xs">
-                                                                <div class="text-center border border-1 rounded-circle">
-                                                                    <span class="far fa-file-image"></span>
+                                                            <div class="avatar avatar-xs">
+                                                                <div class="text-center border border-1">
+                                                                    <img src="/media/{{ appointment.patient.image }}">
+                                                                    {% comment %} <span class="far fa-file-image"></span> {% endcomment %}
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div id="#" class="col p-0">Ahmad</div>
-                                                        <h6 class="ml-5">+998944803888</h6>
+                                                        <div class="col p-0">
+                                                            <h6 class="ml-5">{{ appointment.patient }}</h6>
+                                                            <h6 class="ml-5">{{ appointment.patient.phone_number }}</h6>
+                                                        </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col">
@@ -122,7 +133,8 @@
                                                     <div class="mb-4"></div>
                                                     <div class="row align-items-start mt-1">
                                                         <div class="col">
-                                                            <div class="small text-muted">15 min. Снятие слепка для коронки на имплант</div>
+                                                            <div class="small text-muted">{{ appointment.service.name }}</div>
+                                                            <div class="small text-muted">{{ appointment.appointment.comment }}</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -138,7 +150,7 @@
                                                 <div class="col">
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a href="tel:" class="btn btn-outline-info mr-2" draggable="false">
+                                                    <a href="tel:{{ appointment.patient.phone_number }}" class="btn btn-outline-info mr-2" draggable="false">
                                                         <i class="fas fa-phone"></i>
                                                     </a>
                                                     <button class="btn btn-white">
@@ -151,6 +163,7 @@
                                 </div>
                             </div>
                         </div>
+                        {% endfor %}
                         {% comment %} <div class="card-body">
                             <div tabindex="0" class="kanban-category">
                                 <div tabindex="0" class="kanban-item">

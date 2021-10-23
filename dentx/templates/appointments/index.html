@@ -16,10 +16,10 @@
                 <div class="daily-about">
                     <p>18-sentyabr Shanba 13:13</p>
                 </div>
-                <a href="#">
+                <span class="full-screen">
                     <i class="fal fa-expand" id="full-screen"></i>
                     <i class="fal fa-compress display_none" id="full-screen2"></i>
-                </a>
+                </span>
             </div>
             <div class="modal-form display_none">
                 <div class="container">
@@ -125,15 +125,14 @@
             url: "{% url 'appointment:table' %}",
             success: function(result) {
                 $(".overflow").html(result)
-                $("head").append(
-                    $("<link rel='stylesheet'>").attr("href", "{% static 'css/table.css' %}")
-                )
                 $(".overflow td.time").on("dblclick", function() {
                     if ($(".modal-form").hasClass("display_none")) {
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
                         $("#id_begin_day").val(temp[0])
-                        text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
+                        time = $(this).parent().children(":first-child").text()
+                        text = ` ${temp[1]}, ${temp[0]}, ${time}`
+                        $("#id_begin_time").val(time).change()
                         $(".form-title p").text(text)
                     } else {
                         $(".modal-form").removeClass("display_absolute").addClass("display_none")
@@ -160,7 +159,9 @@
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
                         $("#id_begin_day").val(temp[0])
-                        text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
+                        time = $(this).parent().children(":first-child").text()
+                        text = ` ${temp[1]}, ${temp[0]}, ${time}`
+                        $("#id_begin_time").val(time).change()
                         $(".form-title p").text(text)
                     } else {
                         $(".modal-form").removeClass("display_absolute").addClass("display_none")
@@ -188,7 +189,9 @@
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
                         $("#id_begin_day").val(temp[0])
-                        text = ` ${temp[1]}, ${temp[0]}, ${$(this).parent().children(":first-child").text()}`
+                        time = $(this).parent().children(":first-child").text()
+                        text = ` ${temp[1]}, ${temp[0]}, ${time}`
+                        $("#id_begin_time").val(time).change()
                         $(".form-title p").text(text)
                     } else {
                         $(".modal-form").removeClass("display_absolute").addClass("display_none")
@@ -198,6 +201,7 @@
             today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000)
         })
         $("#full-screen").on("click", function() {
+            console.log($("#full-screen2"))
             if ($("#full-screen2").hasClass("display_none")) {
                 $("#full-screen2").addClass("display_absolute").removeClass("display_none")
                 $("#full-screen").addClass("display_none")
@@ -224,10 +228,57 @@
                 $(".modal-form").removeClass("display_absolute").addClass("display_none")
             }
         })
+        $("span.input-group-text").on("click", function() {
+            if ($(".input-group").has("div.w-100").length == 0) {
+                $.ajax({
+                    url : "{% url 'appointment:patients' %}",
+                }).always(function(result) {
+                    $("#id_name").removeClass("mb-3").parent().append(
+                        $("<div class=\"w-100\"></div>")
+                    )
+                    for (let i = 0; i < result.length; i++) {
+                        $(".input-group div.w-100").append(
+                            $("<div class=\"row align-items-center py-1 px-2\"></div>").append(
+                                $("<div class=\"col-auto\"></div>").append(
+                                    $("<div class=\"avatar avatar-xs\"></div>").append(
+                                        $("<div class=\"text-center border border-1\"></div>").append(
+                                            $("<img>").attr("src", `/media/${result[i]["image"]}`)
+                                        )
+                                    )
+                                )
+                            ).append(
+                                $("<div class=\"col p-0\"></div>").append(
+                                    $("<h6 class=\"ml-5\"></h6>").html(result[i]["name"])
+                                ).append(
+                                    $("<h6 class=\"ml-5\"></h6>").html(result[i]["phone_number"])
+                                )
+                            )
+                        )
+                    }
+                    $(".input-group div.w-100 > div").on("click", function() {
+                        $("#id_name").val(result[$(this).index()]["name"])
+                        $("#id_phone_number").val(result[$(this).index()]["phone_number"])
+                        $("#id_birthday").val(result[$(this).index()]["birthday"])
+                        $(`#id_gender_${result[$(this).index()]["gender"] - 1}`).attr("checked", true)
+                        $("#id_address").val(result[$(this).index()]["address"])
+                        $(".input-group div.w-100").remove()
+                        $("#id_name").addClass("mb-3")
+                    })
+                })
+            } else {
+                $(".input-group div.w-100").remove()
+                $("#id_name").addClass("mb-3")
+            }
+        })
         $("#id_service"){% for service in services %}.append(
             $("<option></option>").html("{{ service.service_name.name }}")
         )
         {% endfor %}
+        $("#id_service").on("change", function() {
+            {% for service in services %}if ($("#id_service").val() == "{{ service.service_name.name }}") {
+                $("#id_duration").val("{{ service.service.duration }}").change()
+            }{% endfor %}
+        })
         $("#id_begin_time"){% for time in times %}.append(
             $("<option></option>").html("{{ time }}")
         )
