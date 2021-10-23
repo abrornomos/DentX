@@ -24,7 +24,7 @@
             <div class="modal-form display_none">
                 <div class="container">
                     <div class="block-form col-12">
-                        <form method="POST">
+                        <form class="form-group" method="POST">
                             {% csrf_token %}
                             <div class="pats">
                                 <div class="mb-1 d-flex justify-content-between">
@@ -33,7 +33,10 @@
                                         <i class="fal fa-times"></i>
                                     </span>
                                 </div>
-                                {{ appointmentform.name }}
+                                <div class="input-group w-100">
+                                    {{ appointmentform.name }}
+                                    <span class="input-group-text"><p><i class="fas fa-caret-down"></i></p></span>
+                                </div>
                                 <div class="bottom-inputs d-flex justify-content-between flex-wrap mt-2">
                                     <div class="left col-12 col-lg-3 d-flex flex-column align-items-start">
                                         <label class="mb-1 left" for="id_phone_number">{{ appointmentform.phone_number.label }}</label>
@@ -125,7 +128,7 @@
                 $("head").append(
                     $("<link rel='stylesheet'>").attr("href", "{% static 'css/table.css' %}")
                 )
-                $(".overflow td").on("dblclick", function() {
+                $(".overflow td.time").on("dblclick", function() {
                     if ($(".modal-form").hasClass("display_none")) {
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
@@ -152,7 +155,7 @@
                 dataType : "json",
             }).always(function(result) {
                 $(".overflow").html(result.responseText)
-                $(".overflow td").on("dblclick", function() {
+                $(".overflow td.time").on("dblclick", function() {
                     if ($(".modal-form").hasClass("display_none")) {
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")
@@ -180,7 +183,7 @@
                 dataType : "json",
             }).always(function(result) {
                 $(".overflow").html(result.responseText)
-                $(".overflow td").on("dblclick", function() {
+                $(".overflow td.time").on("dblclick", function() {
                     if ($(".modal-form").hasClass("display_none")) {
                         $(".modal-form").addClass("display_absolute").removeClass("display_none")
                         temp = $(`thead th:nth-child(${$(this).index() + 1})`).html().split("<br>")

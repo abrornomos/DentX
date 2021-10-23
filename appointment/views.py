@@ -1,8 +1,9 @@
 from django.conf import settings as global_settings
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, HttpResponse
+from django.utils import timezone
 from django.utils.translation import get_language
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, tzinfo
 from baseapp.models import Language
 from dentist.models import User as DentistUser, User_translation as DentistUserTranslation, Service, Service_translation
 from patient.models import User as PatientUser
@@ -15,6 +16,7 @@ from .var import *
 
 
 def appointments(request):
+    print(timezone.now().tzinfo)
     if request.user.username not in request.session:
         return redirect(f"{global_settings.LOGIN_URL}?next={request.path}")
     user = User.objects.get(username=request.user.username)
@@ -43,7 +45,7 @@ def appointments(request):
                     begin_year = int(begin.split(" ")[1])
                     begin_hour = int(appointmentform.cleaned_data['begin_time'].split(":")[0])
                     begin_minute = int(appointmentform.cleaned_data['begin_time'].split(":")[1])
-                    begin = datetime(begin_year, begin_month, begin_day, begin_hour, begin_minute)
+                    begin = datetime(begin_year, begin_month, begin_day, begin_hour, begin_minute, tzinfo=timezone.now().tzinfo)
                     duration = int(appointmentform.cleaned_data['duration'])
                     duration = timedelta(hours=duration // 60, minutes=duration % 60)
                     end = begin + duration
@@ -112,7 +114,7 @@ def table(request):
         temp = date.today()
         day = temp - timedelta(days=temp.weekday())
     days = [day]
-    html = f"<table class=\"time-table table-bordered text-center\"><thead><tr class=\"text-center\"><th>Time</th><th>{day.day}-{MONTHS[day.month - 1].lower()}<br>{DAYS[day.weekday()]}</th>"
+    html = f"<table class=\"time-table table-bordered text-center\"><thead><tr class=\"text-center\"><th>Time</th><th>{day.day}-{MONTHS[day.month - 1].lower()} {day.year}<br>{DAYS[day.weekday()]}</th>"
     for i in range(6):
         temp = days[len(days) - 1] + timedelta(days=1)
         days.append(temp)
@@ -134,15 +136,27 @@ def table(request):
         dentist.worktime_end.hour,
         dentist.worktime_end.minute
     )
+    print(Appointment.objects.filter(
+        begin__year=2021,
+        begin__month=10,
+        begin__day=21
+    ))
     while day_begin <= day_end:
         html += f"<tr><th>{day_begin.strftime('%H:%M')}</th>"
         for day in days:
-            if compare_time(day_begin, Appointment.objects.filter(
-                begin__year=day_begin.year,
-                begin__month=day_begin.month,
-                begin__day=day_begin.day
-            )):
-                html += f"<td>{day_begin.strftime('%H:%M')}</td>"
+            time = datetime(
+                day.year,
+                day.month,
+                day.day,
+                day_begin.hour,
+                day_begin.minute,
+                tzinfo=timezone.now().tzinfo
+            )
+            html += compare_time(time, Appointment.objects.filter(
+                begin__year=time.year,
+                begin__month=time.month,
+                begin__day=time.day
+            ))
         day_begin += timedelta(minutes=15)
         html += "</tr>"
     html += "</tbody></table>"

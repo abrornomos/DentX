@@ -757,32 +757,14 @@ table {
   overflow-x: scroll;
 }
 
-.time-table {
-  width: 100%;
-}
-
-.time-table thead tr {
-  border-bottom: 1px solid black;
-}
-
-.time-table thead tr th, .time-table tbody tr td {
-  border: 1px solid black;
-}
-
-td {
-  padding: 0 70px;
-  opacity: 0;
-  background: rgb(228, 228, 228);
-}
-
-td:hover {
-  opacity: 1;
-  background: rgb(228, 228, 228);
+.modal-form span {
+  height: 38px;
   cursor: pointer;
+  border-radius: 0;
 }
 
-tr th {
-  border: 1px solid black;
+.modal-form p {
+  margin: 0;
 }
 
 .controls {

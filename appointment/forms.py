@@ -8,7 +8,7 @@ class AppointmentForm(forms.Form):
         label=_("Bemor"),
         widget=forms.TextInput(
             attrs={
-                'class': "w-100 mb-3",
+                'class': "form-control mb-3",
                 'placeholder': _("Bemor FIOsi"),
             }
         ),
@@ -18,7 +18,7 @@ class AppointmentForm(forms.Form):
         label=_("Telefon raqami"),
         widget=forms.TextInput(
             attrs={
-                'class': "wid",
+                'class': "form-control wid",
                 'placeholder': _("+9989XXXXXXXX"),
             }
         ),
@@ -28,7 +28,7 @@ class AppointmentForm(forms.Form):
         label=_("Tugilgan sana"),
         widget=forms.DateInput(
             attrs={
-                'class': "wid",
+                'class': "form-control wid",
                 'type': "date",
             }
         ),
@@ -38,7 +38,7 @@ class AppointmentForm(forms.Form):
         label=_("Jins"),
         widget=forms.RadioSelect(
             attrs={
-                'class': "m-1",
+                'class': "form-switch m-1",
             },
             choices=CHOICES['gender']
         )
@@ -47,7 +47,7 @@ class AppointmentForm(forms.Form):
         label=_("Manzil"),
         widget=forms.TextInput(
             attrs={
-                'class': "w-100",
+                'class': "form-control w-100",
                 'placeholder': _("Manzilni kiriting"),
             }
         ),
@@ -57,7 +57,7 @@ class AppointmentForm(forms.Form):
         label=_("Xizmat"),
         widget=forms.Select(
             attrs={
-                'class': "wid"
+                'class': "form-select wid"
             }
         ),
         localize=True
@@ -69,7 +69,7 @@ class AppointmentForm(forms.Form):
         label=_("Boshlanish vaqti"),
         widget=forms.Select(
             attrs={
-                'class': "wid"
+                'class': "form-select wid"
             }
         )
     )
@@ -77,7 +77,7 @@ class AppointmentForm(forms.Form):
         label=_("Davomiyligi"),
         widget=forms.Select(
             attrs={
-                'class': "wid"
+                'class': "form-select wid"
             },
             choices=CHOICES['duration']
         )
@@ -86,7 +86,7 @@ class AppointmentForm(forms.Form):
         label=_("Eslatma"),
         widget=forms.Textarea(
             attrs={
-                'class': 'w-100'
+                'class': "form-control w-100"
             }
         ),
         required=False
