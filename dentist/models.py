@@ -45,7 +45,7 @@ class User(models.Model):
     worktime_begin = models.TimeField(_("Ish vaqti boshlanishi"), auto_now=False, auto_now_add=False)
     worktime_end = models.TimeField(_("Ish vaqti tugashi"), auto_now=False, auto_now_add=False)
     is_fullday = models.BooleanField(_("24 soat rejimi"))
-    slug = models.CharField(_("Slug"), max_length=255, default="1")
+    slug = models.CharField(_("Slug"), max_length=255)
     clinic = models.ForeignKey("dentist.Clinic", verbose_name=_("Shifoxona"), on_delete=models.CASCADE, related_name="dentist_clinic")
 
     class Meta:
@@ -110,16 +110,4 @@ class Cabinet_Image(models.Model):
         verbose_name_plural = _("Kabinet rasmlari")
 
     def __str__(self):
-        return f"{self.image} - {self.dentist.__str__()}"
-
-
-# class service(models.Model):
-#     name = models.CharField(max_length=200, null=True)
-#     price = models.FloatField(default=0)
-#     duration = models.IntegerField()
-#     dentist = models.ForeignKey(user, on_delete=models.CASCADE)
-
-
-# class cabinet_photo(models.Model):
-#     image = models.ImageField()
-#     dentist = models.ForeignKey(user, on_delete=models.CASCADE)
+        return f"{self.image.name} - {self.dentist.__str__()}"

@@ -28,7 +28,7 @@ class Region(models.Model):
 
 class Gender(models.Model):
 
-    name = models.CharField(("Jins"), max_length=20)
+    name = models.CharField(_("Jins"), max_length=20)
 
     class Meta:
         verbose_name = _("Jins")
